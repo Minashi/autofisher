@@ -3,7 +3,7 @@
 fishcounter=0
 totalfishcounter=0
 timeactive=0
-limit=1
+limit=50
 
 function enter {
     xdotool keydown KP_Enter
