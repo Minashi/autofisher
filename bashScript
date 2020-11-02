@@ -3,7 +3,7 @@
 fishcounter=0
 totalfishcounter=0
 timeactive=0
-limit=2
+limit=1
 
 function enter {
     xdotool keydown KP_Enter
@@ -46,15 +46,15 @@ while true;
 do
     if [ "$fishcounter" -ge "$limit" ]
       then
+      	totalfishcounter=$(($totalfishcounter+$fishcounter))
+      	fishcounter=0
       	printstatistics
         sellfish
-        totalfishcounter=$(($totalfishcounter+$fishcounter))
-        fishcounter=0
         timeactive=$(($timeactive+31))
     else
         xdotool type 't!fishy'
         enter
-        ((fishcounter++))
+        fishcounter=$(($fishcounter+1))
         timeactive=$(($timeactive+31))
         xdotool sleep 31        
     fi
