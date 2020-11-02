@@ -1,0 +1,62 @@
+#!/bin/bash
+
+fishcounter=0
+totalfishcounter=0
+timeactive=0
+limit=2
+
+function enter {
+    xdotool keydown KP_Enter
+    xdotool keyup KP_Enter
+}
+
+function printstatistics {
+	xdotool type '@minashi#7667 '
+	enter
+	xdotool sleep .5
+	xdotool type 'I have fished '
+	xdotool type $totalfishcounter 
+	xdotool type ' times.'
+	enter
+	xdotool sleep .5
+	xdotool type 'I Have been out here in the deep blue sea for '
+	xdotool type $timeactive 
+	xdotool type ' seconds.'
+	enter
+	echo 'Total fish counter: ' $totalfishcounter
+	echo 'Time active: ' $timeactive
+}
+
+function sellfish {
+     xdotool sleep 5
+     xdotool type 't!fishy sell uncommon'
+     enter
+     xdotool sleep 5
+     xdotool type 't!fishy sell common'
+     enter
+     xdotool sleep 5
+     xdotool type 't!fishy sell garbage'
+     enter
+     xdotool sleep 15
+}
+
+xdotool sleep 5
+
+while true;
+do
+    if [ "$fishcounter" -ge "$limit" ]
+      then
+      	printstatistics
+        sellfish
+        totalfishcounter=$(($totalfishcounter+$fishcounter))
+        fishcounter=0
+        timeactive=$(($timeactive+31))
+    else
+        xdotool type 't!fishy'
+        enter
+        ((fishcounter++))
+        timeactive=$(($timeactive+31))
+        xdotool sleep 31        
+    fi
+    
+done
