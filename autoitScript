@@ -1,0 +1,71 @@
+#include <AutoItConstants.au3>
+
+$paused = True
+
+HotKeySet("=", "pause")
+HotKeySet("-", "terminate")
+
+Func pause()
+    $paused = Not $paused
+EndFunc
+
+Func terminate()
+    Exit
+EndFunc   ;==>Terminate
+
+Local $fishcounter=0
+local $otalfishcounter=0
+local $timeactive=0
+local $limit=50
+
+func enter()
+   send("{ENTER}")
+EndFunc
+
+func printstatistics()
+   send("@minashi#7667 ")
+   enter
+   sleep(500)
+   send("I have fished ")
+   ;Send(totalfishcounter)
+   send(" times.")
+   enter
+   Sleep(500)
+   send("I Have been out here in the deep blue sea for ")
+   ;send(timeactive)
+   send(" seconds.")
+   enter
+EndFunc
+
+func sellfish()
+   Sleep(5000)
+   send("t!fishy sell uncommon")
+   enter
+   Sleep(5000)
+   send("t!fishy sell common")
+   enter
+   Sleep(5000)
+   send("t!fishy sell garbage")
+   enter
+   Sleep(15000)
+EndFunc
+
+while True
+   If $paused Then
+	  ToolTip("Press = to start fishing...", 0, 0)
+      Sleep(500)
+   ElseIf $fishcounter >= $limit Then
+	  ToolTip("Fishing! Press - to end...", 0, 0)
+	  $totalfishcounter += $fishcounter
+	  $fishcounter = 0
+	  printstatistics
+	  sellfish
+	  timeactive += 31
+   Else
+	  send("t!fishy")
+	  enter
+	  $fishcounter += 1
+	  $timeactive += 31
+	  Sleep(31000)
+   EndIf
+WEnd
